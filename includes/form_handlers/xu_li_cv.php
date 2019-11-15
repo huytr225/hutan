@@ -22,7 +22,7 @@ if (isset($_POST['luu_ho_so'])) {
 	if ($_POST['id'] == 'new') {
 		$ho_so = new HoSo($con, $nguoi_dung_dang_nhap->getTenTaiKhoan());
 		$ho_so->themHoSo($_POST['thong_tin_ho_so'], $_POST['thong_tin_ca_nhan']);
-		var_dump($ho_so);
+		// var_dump($ho_so);
 	} else {
 		$ho_so = new HoSo($con, $nguoi_dung_dang_nhap->getTenTaiKhoan());
 		$ho_so->capNhatHoSo($_POST['id'], $_POST['thong_tin_ho_so'], $_POST['thong_tin_ca_nhan']);
