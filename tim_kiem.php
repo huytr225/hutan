@@ -27,17 +27,14 @@ else {
 		echo "Bạn phải điền gì đó.";
 	else {
 
-		//If query contains an underscore, assume user is searching for ten_tai_khoan
 		if($type == "ten_tai_khoan") 
 			$usersReturnedQuery = mysqli_query($con, "SELECT * FROM NguoiDung WHERE ten_tai_khoan LIKE '$query%' LIMIT 8");
-		//If there are two words, assume they are first and last names respectively
 		else if ($type == "ten") {
 
 			$names = explode(" ", $query);
 
 			if(count($names) == 3)
 				$usersReturnedQuery = mysqli_query($con, "SELECT * FROM NguoiDung WHERE (ten LIKE '$names[0]%' AND ho LIKE '$names[2]%')");
-			//If query has one word only, search first names or last names 
 			else if(count($names) == 2)
 				$usersReturnedQuery = mysqli_query($con, "SELECT * FROM NguoiDung WHERE (ten LIKE '$names[0]%' AND ho LIKE '$names[1]%') OR (ten LIKE '$names[1]%' AND ho LIKE '$names[0]%')");
 			else 
@@ -47,7 +44,6 @@ else {
 			
 		}
 
-		//Check if results were found 
 		if(mysqli_num_rows($usersReturnedQuery) == 0)
 			echo "Không tìm thấy ai có " . $type . " giống như: " .$query;
 		else 
@@ -60,7 +56,6 @@ else {
 			echo ", <a href='tim_kiem.php?q=" . $query ."&type=ky_nang'>Kỹ năng</a>";
 		}
 		echo "<br><br><hr id='search_hr'>";
-		// var_dump($nguoi_dung_dang_nhap->getCaoCap());
 		while($row = mysqli_fetch_array($usersReturnedQuery)) {
 			$user_obj = new NguoiDung($con, $nguoi_dung_dang_nhap->getTenTaiKhoan());
 			$nguoi_dung = new NguoiDung($con, $row['ten_tai_khoan']);
@@ -69,7 +64,6 @@ else {
 
 			if($nguoi_dung_dang_nhap->getTenTaiKhoan() != $row['ten_tai_khoan']) {
 
-				//Generate button depending on friendship status 
 				if($user_obj->laBanBe($nguoi_dung))
 					$button = "<input type='submit' name='" . $nguoi_dung->getTenTaiKhoan() . "' class='danger' value='Xoá bạn'>";
 				else if($user_obj->daNhanLoiMoi($nguoi_dung))
@@ -79,7 +73,6 @@ else {
 				else 
 					$button = "<input type='submit' name='" . $nguoi_dung->getTenTaiKhoan() . "' class='success' value='Thêm bạn'>";
 
-				// $mutual_friends = $user_obj->getMutualFriends($nguoi_dung->getTenTaiKhoan()) . " friends in common";
 
 
 				// //Button forms
@@ -128,7 +121,7 @@ else {
 				</div>
 				<hr id='search_hr'>";
 
-		} //End while
+		} 
 	}
 
 
